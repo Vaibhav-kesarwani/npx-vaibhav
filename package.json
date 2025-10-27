@@ -1,18 +1,29 @@
 {
-  "name": "npx-vaibhav",
+  "name": "vaibhav-cli",
   "version": "1.0.0",
-  "description": "A CLI introduction card for Vaibhav Kesarwani — Software Developer",
+  "description": "✨ Personal CLI card of Vaibhav Kesarwani — Software Developer",
   "main": "index.js",
   "bin": {
-    "vaibhav": "./index.js"
+    "vaibhav": "./bin/index.js"
   },
   "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "keywords": [
+    "cli",
+    "npx",
+    "card",
+    "developer",
+    "portfolio"
+  ],
+  "author": "Vaibhav Kesarwani",
+  "license": "MIT",
+   "homepage": "https://vaibhavkesarwani.vercel.app/",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Vaibhav-kesarwani/npx-vaibhav.git"
+  },
   "dependencies": {
     "boxen": "^8.0.1",
     "chalk": "^5.6.2",
