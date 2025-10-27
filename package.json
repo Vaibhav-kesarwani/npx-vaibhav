@@ -1,0 +1,27 @@
+{
+  "name": "npx-vaibhav",
+  "version": "1.0.0",
+  "description": "A CLI introduction card for Vaibhav Kesarwani — Software Developer",
+  "main": "index.js",
+  "bin": {
+    "vaibhav": "./index.js"
+  },
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "boxen": "^8.0.1",
+    "chalk": "^5.6.2",
+    "cli-spinner": "^0.2.10",
+    "dayjs": "^1.11.18",
+    "figlet": "^1.9.3",
+    "gradient-string": "^3.0.0",
+    "inquirer": "^12.10.0",
+    "node-fetch": "^3.3.2",
+    "open": "^10.2.0"
+  }
+}
