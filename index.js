@@ -81,15 +81,14 @@ async function getGitHubData() {
     });
 
     const connect = `
-${accent(" GitHub")}    ${chalk.cyan(user.html_url)}
-${accent(" Website")}   ${chalk.cyan("https://vaibhavkesarwani.vercel.app/")}
+${accent(" GitHub")}    ${chalk.cyan("github.com/Vaibhav-kesarwani")}
+${accent(" Website")}   ${chalk.cyan("vaibhavkesarwani.vercel.app/")}
 ${accent(" Email")}     ${chalk.cyan("vaibhavkesarwani100@gmail.com")}
 ${accent(" LinkedIn")}  ${chalk.cyan("linkedin.com/in/vaibhavdev")}
+${accent(" Twitter")}   ${chalk.cyan("x.com/vaibhav_k__")}
 `;
 
-    const stack = chalk.white(
-      "React  •  Next.js  •  TypeScript  •  Python"
-    );
+    const stack = chalk.white("React  •  Next.js  •  TypeScript  •  Python");
 
     const projects = topRepos
       .map(
