@@ -1,6 +1,6 @@
 {
   "name": "vaibhav-cli",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "✨ Personal CLI card of Vaibhav Kesarwani — Software Developer",
   "main": "index.js",
   "bin": {
