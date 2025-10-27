@@ -37,20 +37,39 @@ async function getGitHubData() {
     const time = chalk.gray(dayjs().format("HH:mm [IST] • ddd, MMM D"));
     const line = chalk.gray("─".repeat(boxWidth - 10));
 
-    const rawFiglet = figlet.textSync("Vaibhav", {
-      font,
-      horizontalLayout: "default",
-    });
-    const figletLines = rawFiglet.split("\n");
+    let selectedFont = font;
 
-    const centeredFiglet = figletLines
-      .map((line) => {
-        const pad = Math.max(0, (boxWidth - line.length) / 2);
-        return " ".repeat(Math.floor(pad)) + line;
-      })
-      .join("\n");
+    if (boxWidth < 60) {
+      selectedFont = "Standard";
+    } else if (boxWidth < 75) {
+      selectedFont = "Small";
+    }
 
-    const title = gradient.pastel.multiline(centeredFiglet);
+    let title;
+    try {
+      const rawFiglet = figlet.textSync("Vaibhav", {
+        font: selectedFont,
+        horizontalLayout: "fitted",
+      });
+      const figletLines = rawFiglet.split("\n");
+
+      const centeredFiglet = figletLines
+        .map((line) => {
+          const visibleLength = line.replace(/\x1B\[[0-9;]*m/g, "").length;
+          const pad =
+            visibleLength < boxWidth
+              ? Math.floor((boxWidth - visibleLength) / 2)
+              : 2;
+          return " ".repeat(pad) + line;
+        })
+        .join("\n");
+
+      title = gradient.pastel.multiline(centeredFiglet);
+    } catch {
+      const name = "Vaibhav";
+      const pad = Math.max(0, Math.floor((boxWidth - name.length) / 2));
+      title = gradient.pastel(" ".repeat(pad) + name);
+    }
 
     const taglineText = "Software Developer • AI | DevTools | UI/UX Enthusiast";
     const tagline = boxen(chalk.white(taglineText), {
@@ -63,13 +82,13 @@ async function getGitHubData() {
 
     const connect = `
 ${accent(" GitHub")}    ${chalk.cyan(user.html_url)}
-${accent(" Website")}   ${chalk.cyan("https://vaibhav.vercel.app")}
-${accent(" Email")}     ${chalk.cyan("hello@vaibhav.dev")}
-${accent(" LinkedIn")}  ${chalk.cyan("linkedin.com/in/vaibhav")}
+${accent(" Website")}   ${chalk.cyan("https://vaibhavkesarwani.vercel.app/")}
+${accent(" Email")}     ${chalk.cyan("vaibhavkesarwani100@gmail.com")}
+${accent(" LinkedIn")}  ${chalk.cyan("linkedin.com/in/vaibhavdev")}
 `;
 
     const stack = chalk.white(
-      "React  •  Next.js  •  TypeScript  •  Node.js  •  Python  •  PostgreSQL"
+      "React  •  Next.js  •  TypeScript  •  Python"
     );
 
     const projects = topRepos
