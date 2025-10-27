@@ -1,6 +1,6 @@
 {
   "name": "vaibhav-cli",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "✨ Personal CLI card of Vaibhav Kesarwani — Software Developer",
   "main": "index.js",
   "bin": {
@@ -19,7 +19,7 @@
   ],
   "author": "Vaibhav Kesarwani",
   "license": "MIT",
-   "homepage": "https://vaibhavkesarwani.vercel.app/",
+  "homepage": "https://vaibhavkesarwani.vercel.app/",
   "repository": {
     "type": "git",
     "url": "https://github.com/Vaibhav-kesarwani/npx-vaibhav.git"
