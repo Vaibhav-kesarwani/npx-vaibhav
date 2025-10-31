@@ -7,6 +7,15 @@ import dayjs from "dayjs";
 import fetch from "node-fetch";
 import { Spinner } from "cli-spinner";
 import wrapAnsi from "wrap-ansi";
+import open from "open";
+import ora from "ora";
+import cliSpinners from "cli-spinners";
+import fs from "fs";
+import path from "path";
+import request from "request";
+import inquirer from "inquirer";
+
+const prompt = inquirer.createPromptModule();
 
 const username = "Vaibhav-kesarwani";
 const font = "Epic";
@@ -18,6 +27,69 @@ const boxWidth = Math.min(terminalWidth - 6, 90);
 const spinner = new Spinner("%s Fetching live GitHub data...");
 spinner.setSpinnerString("⠋⠙⠹⠸⠼⠴⠦⠧⠇⠏");
 spinner.start();
+
+const questions = [
+  {
+    type: "list",
+    name: "action",
+    message: "What do you want to do?",
+    choices: [
+      {
+        name: `Send me an ${chalk.green.bold("email")}`,
+        value: async () => {
+          await open("mailto:vaibhavkesarwani100@gmail.com");
+          console.log(chalk.yellow("\nDone! See you soon in inbox.\n"));
+        },
+      },
+      {
+        name: `Download my ${chalk.magentaBright.bold("Resume")}`,
+        value: async () => {
+          const loader = ora({
+            text: chalk.gray("Downloading Resume..."),
+            spinner: cliSpinners.material,
+          }).start();
+
+          const resumeUrl =
+            "https://drive.google.com/uc?export=download&id=16mQ8BQlpTX2vyemCcoUFx_Ypc6p0oXwp";
+
+          try {
+            const filePath = path.join(process.cwd(), "vaibhav-resume.pdf");
+            const stream = fs.createWriteStream(filePath);
+
+            request(resumeUrl)
+              .pipe(stream)
+              .on("finish", async () => {
+                loader.succeed(chalk.green("Resume downloaded successfully!"));
+                console.log(`\n📂 Saved at: ${chalk.cyan(filePath)}\n`);
+                await open(filePath);
+              })
+              .on("error", (err) => {
+                loader.fail(chalk.red("Error downloading resume."));
+                console.error(err.message);
+              });
+          } catch (error) {
+            loader.fail("Failed to download resume.");
+            console.error(error.message);
+          }
+        },
+      },
+      {
+        name: `Schedule a ${chalk.redBright.bold("Meeting")}`,
+        value: async () => {
+          await open("https://cal.com/vaibhav-kesarwani");
+          console.log(chalk.yellow("\nSee you at the meeting!\n"));
+        },
+      },
+      {
+        name: "Just quit.",
+        value: () => {
+          console.log(chalk.gray("\nHasta la vista 👋\n"));
+          process.exit(0);
+        },
+      },
+    ],
+  },
+];
 
 async function getGitHubData() {
   try {
@@ -38,12 +110,8 @@ async function getGitHubData() {
     const line = chalk.gray("─".repeat(boxWidth - 10));
 
     let selectedFont = font;
-
-    if (boxWidth < 60) {
-      selectedFont = "Standard";
-    } else if (boxWidth < 75) {
-      selectedFont = "Small";
-    }
+    if (boxWidth < 60) selectedFont = "Standard";
+    else if (boxWidth < 75) selectedFont = "Small";
 
     let title;
     try {
@@ -51,8 +119,8 @@ async function getGitHubData() {
         font: selectedFont,
         horizontalLayout: "fitted",
       });
-      const figletLines = rawFiglet.split("\n");
 
+      const figletLines = rawFiglet.split("\n");
       const centeredFiglet = figletLines
         .map((line) => {
           const visibleLength = line.replace(/\x1B\[[0-9;]*m/g, "").length;
@@ -81,11 +149,11 @@ async function getGitHubData() {
     });
 
     const connect = `
-${accent(" GitHub")}    ${chalk.cyan("github.com/Vaibhav-kesarwani")}
-${accent(" Website")}   ${chalk.cyan("vaibhavkesarwani.vercel.app/")}
-${accent(" Email")}     ${chalk.cyan("vaibhavkesarwani100@gmail.com")}
-${accent(" LinkedIn")}  ${chalk.cyan("linkedin.com/in/vaibhavdev")}
-${accent(" Twitter")}   ${chalk.cyan("x.com/vaibhav_k__")}
+${accent.bold(" GitHub")}    ${chalk.cyan("github.com/Vaibhav-kesarwani")}
+${accent.bold(" Website")}   ${chalk.cyan("vaibhavkesarwani.vercel.app")}
+${accent.bold(" Email")}     ${chalk.cyan("vaibhavkesarwani100@gmail.com")}
+${accent.bold(" LinkedIn")}  ${chalk.cyan("linkedin.com/in/vaibhavdev")}
+${accent.bold(" Twitter")}   ${chalk.cyan("x.com/vaibhav_k__")}
 `;
 
     const stack = chalk.white("React  •  Next.js  •  TypeScript  •  Python");
@@ -134,10 +202,20 @@ ${chalk.gray("Made with ❤️  by ")}${accent("Vaibhav Kesarwani")}
         width: boxWidth,
       })
     );
+
+    console.log(
+      `\n💡 ${chalk.cyanBright.bold("Tip:")} Try ${chalk.yellowBright.bold(
+        "Cmd/Ctrl + Click"
+      )} on the links above!\n`
+    );
   } catch (err) {
     spinner.stop(true);
     console.error(chalk.red("Error fetching GitHub data:"), err.message);
   }
 }
 
-getGitHubData();
+(async () => {
+  await getGitHubData();
+  const answer = await prompt(questions);
+  await answer.action();
+})();
