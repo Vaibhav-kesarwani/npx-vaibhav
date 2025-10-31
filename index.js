@@ -50,7 +50,7 @@ const questions = [
           }).start();
 
           const resumeUrl =
-            "https://drive.google.com/uc?export=download&id=16mQ8BQlpTX2vyemCcoUFx_Ypc6p0oXwp";
+            "https://drive.google.com/uc?export=download&id=1eC16RdLy4NgPnxgtPdI3WKNpGq-3zajf";
 
           try {
             const filePath = path.join(process.cwd(), "vaibhav-resume.pdf");
