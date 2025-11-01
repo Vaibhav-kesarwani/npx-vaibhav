@@ -18,7 +18,7 @@ I’m **Vaibhav Kesarwani**, a **software developer** passionate about building 
 
 ### Preview →
 
-![Preview Image of npx vaibhavv](/ss-shot.png)
+![Preview Image of npx vaibhavv](/assets/ss-shot.png)
 
 #### Currently working on:
 
